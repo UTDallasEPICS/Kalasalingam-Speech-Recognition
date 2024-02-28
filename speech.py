@@ -3,7 +3,6 @@ from datetime import timedelta, datetime
 
 '''
 Simple worker for speech to text
-probably shouldnt use oop
 '''
 
 class STT_Worker:
@@ -13,11 +12,9 @@ class STT_Worker:
         self.r = sr.Recognizer()
 
     def check_internet(self) -> bool:
-        # so we dont send so much traffic to google :)
-        if datetime.now() - timedelta(minutes=5) > self.last_check:
+        if last_check and datetime.now() - timedelta(minutes=5) > self.last_check:
             return True
 
-        # lmao some truly terrible code 
         try:
             requests.get("https://www.google.com")
             return True
