@@ -54,7 +54,7 @@ class CommandExecutor:
 
     def execute_command(self, command):
         try:
-            if self.muted and not command in "unmute":
+            if self.muted and not command in "turn off mute":
                 return
             if self.dictation_mode:
                 if "stop dictating" in command:
