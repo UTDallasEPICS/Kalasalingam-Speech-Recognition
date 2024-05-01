@@ -4,7 +4,9 @@
 
 - Use any version of Python 3.11
 - Download 40M and 2.3 GB Vosk models from https://alphacephei.com/vosk/models
-- Libraries to pip install: fuzzywuzzy, pyautogui, pyaudio, 
+- Libraries to pip install: fuzzywuzzy, pyautogui, pyaudio, playsound, 
+- Make sure to specify your specifi file path for the model you're using and Application path file
+- 
 
 
 ## Current Status: 
