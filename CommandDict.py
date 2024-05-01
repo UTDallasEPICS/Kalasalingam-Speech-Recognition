@@ -1,7 +1,6 @@
 #import Events
 from Events2 import ApplicationControl as Events
 command_dict = {
-    "dictate": Events.toggle_dictation_mode,
     # "move cursor to beginning": Events.move_to_beginning,
     # "move cursor to end": Events.move_to_end,
     "focus window": Events.focus_window,
@@ -64,7 +63,5 @@ command_dict = {
     "start dictating": Events.toggle_dictation_mode,
     "stop dictating": Events.toggle_dictation_mode,
     "mute": Events.mute,
-    "unmute": Events.unmute,
-    "activate": "",
-    "terminate": ""
+    "turn off mute": Events.unmute,
 }
