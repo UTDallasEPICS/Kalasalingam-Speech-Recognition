@@ -6,7 +6,7 @@ import threading
 import numpy as np
 import configparser
 import tkinter as tk
-from settingsUI import SettingsUI
+from settingsUI import settingsUI
 
 
 class SpeechRecognizer(threading.Thread):
@@ -44,7 +44,7 @@ class SpeechRecognizer(threading.Thread):
 
     def run_settings_ui(self):
         root = tk.Tk()
-        app = SettingsUI(root)
+        app = settingsUI(root)
         root.mainloop()
 
     def load_settings(self):
@@ -117,16 +117,7 @@ class SpeechRecognizer(threading.Thread):
 
                     if self.recognizing:
                         print(f"Final: {res}")
-                        if "mute" in res:
-                            self.recognizing = False
-                            print("Listening mode muted.")
-                            self.command_executor.execute_command("mute")
-                        elif "unmute" in res:
-                            self.recognizing = True
-                            print("Listening mode unmuted.")
-                            self.command_executor.execute_command("unmute")
-                        else:
-                            self.command_executor.execute_command(res)
+                        self.command_executor.execute_command(res)
 
         except KeyboardInterrupt:
             print("Program terminated by user")
