@@ -21,3 +21,4 @@ pygetwindow
 time
 playsound
 fastpunct
+python-Levenshtein
