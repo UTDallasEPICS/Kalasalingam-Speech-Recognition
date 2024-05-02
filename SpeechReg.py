@@ -6,7 +6,7 @@ import threading
 import numpy as np
 import configparser
 import tkinter as tk
-from settingsUI import settingsUI
+from settingsUI import SettingsUI
 
 
 class SpeechRecognizer(threading.Thread):
@@ -44,7 +44,7 @@ class SpeechRecognizer(threading.Thread):
 
     def run_settings_ui(self):
         root = tk.Tk()
-        app = settingsUI(root)
+        app = SettingsUI(root)
         root.mainloop()
 
     def load_settings(self):
