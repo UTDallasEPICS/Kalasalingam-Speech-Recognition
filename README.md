@@ -15,9 +15,13 @@ Demo: https://youtu.be/vant6FqamCY
 
 
 Use any version of Python 3.11 
+
 Download 40M and 2.3 GB Vosk models from https://alphacephei.com/vosk/models 
+
 Libraries to pip install: fuzzywuzzy, pyautogui, pyaudio, SpeechRecognition 
+
 Or run pip install –r requirements.txt to install everything at once. 
+
 Requirements.txt - fuzzywuzzy pillow PyAudio PyAutoGUI PyGetWindow PyMsgBox requests SpeechRecognition typing_extensions urllib3 
 
 
