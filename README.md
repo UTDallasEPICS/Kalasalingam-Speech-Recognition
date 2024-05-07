@@ -8,10 +8,17 @@ Work concurrently with Kalasalingam Academy to build a speech module that allows
 
 # Setup:
 
-- Use any version of Python 3.11
-- Download 40M and 2.3 GB Vosk models from https://alphacephei.com/vosk/models
-- Utilize the requirements.txt to install all the necessary models
-- Make sure to specify your specific file path for the model you're using and Application path file
+
+Link for Setup: https://youtu.be/BP_LJtT2fKo
+
+Demo: https://youtu.be/vant6FqamCY
+
+
+Use any version of Python 3.11 
+Download 40M and 2.3 GB Vosk models from https://alphacephei.com/vosk/models 
+Libraries to pip install: fuzzywuzzy, pyautogui, pyaudio, SpeechRecognition 
+Or run pip install –r requirements.txt to install everything at once. 
+Requirements.txt - fuzzywuzzy pillow PyAudio PyAutoGUI PyGetWindow PyMsgBox requests SpeechRecognition typing_extensions urllib3 
 
 
 
@@ -32,5 +39,13 @@ Miscellaneous:
 
 - Users of the application should use mic and headset to prevent background noise from interfering
 - When testing locally use the smaller Vosk models
+
+
+
+
+
+
+
+
 
 
