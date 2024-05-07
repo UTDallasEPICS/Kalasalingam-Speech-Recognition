@@ -22,7 +22,7 @@ Libraries to pip install: fuzzywuzzy, pyautogui, pyaudio, SpeechRecognition
 
 Or run pip install –r requirements.txt to install everything at once. 
 
-Requirements.txt - fuzzywuzzy pillow PyAudio PyAutoGUI PyGetWindow PyMsgBox requests SpeechRecognition typing_extensions urllib3 
+
 
 
 
