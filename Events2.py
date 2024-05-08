@@ -4,6 +4,8 @@ from ApplicationPaths import ApplicationPaths
 import subprocess
 import platform
 import pygetwindow as gw
+import os, glob
+
 pyautogui.FAILSAFE = False
 
 if platform.system() == 'Darwin':  # macOS
@@ -18,18 +20,21 @@ class ApplicationControl(threading.Thread):
         self.screenWidth, self.screenHeight = pyautogui.size()
 
     def focus_window(self):
-        all_windows = gw.getAllWindows()
-        for win in all_windows:
-            if 'Notepad' in win.title:
-                win.activate()
-                break
+        if platform.system() == 'Darwin':  # macOS
+            subprocess.Popen(['osascript', '-e', 'tell application "TextEdit" to activate'])
+        else:  # windows, linux
+            all_windows = gw.getAllWindows()
+            for win in all_windows:
+                if 'Notepad' in win.title:
+                    win.activate()
+                    break
 
     def open_application(self):
         if platform.system() == 'Darwin':  # macOS
-            name = 'TextEdit'
+            subprocess.Popen(['osascript', '-e', 'tell application "TextEdit" to make new document'])
         else:  # windows, linux
             name = 'NotePad'
-        subprocess.Popen(ApplicationPaths[name])
+            subprocess.Popen(ApplicationPaths[name])
 
     def close_application(self):
         if platform.system() == 'Darwin':  # macOS
@@ -149,7 +154,66 @@ class ApplicationControl(threading.Thread):
         pyautogui.hotkey(MODIFIER_KEY, '-')
 
     def save_document(self):
-        pyautogui.hotkey(MODIFIER_KEY, 's')
+        if platform.system() == 'Darwin':  # macOS
+            script = '''
+            set docName to "Document"
+            set docFolder to (path to documents folder as text) & "TTSFiles:"
+            set docExtension to ".txt"
+            
+            if not (exists folder docFolder) then
+                do shell script "mkdir -p " & quoted form of docFolder
+            end if
+            
+            tell application "TextEdit"
+                try
+                    set docNumber to count of (get files of folder docFolder whose name starts with docName)
+                    set docNumber to docNumber + 1
+                    
+                    set docPath to docFolder & docName & "-" & docNumber & docExtension
+                    
+                    save front document to file docPath
+                    log "Document saved successfully at: " & docPath
+                on error errMsg
+                    log "Error saving document: " & errMsg
+                end try
+            end tell
+            '''
+            try:
+                process = subprocess.Popen(['osascript', '-e', script], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                stdout, stderr = process.communicate()
+                if stdout:
+                    print(f"AppleScript output: {stdout.strip()}")
+                if stderr:
+                    print(f"AppleScript error: {stderr.strip()}")
+            except Exception as e:
+                print(f"Error executing AppleScript: {str(e)}")
+        elif platform.system() == 'Windows':
+            # Set the folder path for saving documents
+            folder_path = os.path.expanduser('~/Documents/TTSFiles')
+
+            # Create the folder if it doesn't exist
+            if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
+
+            # Get the list of existing files in the folder
+            existing_files = glob.glob(os.path.join(folder_path, 'Document-*.txt'))
+
+            # Find the highest existing document number
+            if existing_files:
+                latest_file = max(existing_files, key=lambda x: int(x.split('-')[-1].split('.')[0]))
+                doc_number = int(latest_file.split('-')[-1].split('.')[0]) + 1
+            else:
+                doc_number = 1
+
+            # Construct the new document path
+            new_doc_path = os.path.join(folder_path, f'Document-{doc_number}.txt')
+
+            # Save the document using the new file path
+            pyautogui.hotkey(MODIFIER_KEY, 's')  # Press Ctrl+S to open the Save dialog
+            pyautogui.typewrite(new_doc_path)  # Type the new file path
+            pyautogui.press('enter')  # Press Enter to save the document
+        else:
+            pyautogui.hotkey(MODIFIER_KEY, 's')
 
     def underline(self):
         pyautogui.hotkey(MODIFIER_KEY, 'u')
